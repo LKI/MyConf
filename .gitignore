@@ -32,7 +32,6 @@ play.go
 .venv/
 .vs/
 .vscode/
-build/
 dist/
 htmlcov/
 node_modules/

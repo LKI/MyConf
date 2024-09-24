@@ -262,12 +262,16 @@ gethost () {
 }
 gsh () {
   KEYWORD=${1}
+  FLAGS=${2}
   shift
-  HOSTLINE=$(gcloud compute instances list --filter="name:${KEYWORD}" | grep RUNNING | fzf -1 -0)
+  HOSTLINE=$(gcloud ${FLAGS} compute instances list --filter="name:${KEYWORD}" | grep RUNNING | fzf -1 -0)
   if [[ -n "${HOSTLINE}" ]]; then
     read -r NAME ZONE NOTHING <<< "${HOSTLINE}"
-    gcloud compute ssh ${NAME} --zone=${ZONE} --tunnel-through-iap -- -t sudo -i;
+    gcloud ${FLAGS} compute ssh ${NAME} --zone=${ZONE} --tunnel-through-iap -- -t sudo -i;
   fi
+}
+gshm () {
+  gsh "${1}" --project=immersive-362502
 }
 csh () {
   KEYWORD=${1}
